@@ -7,26 +7,30 @@ var app = express()
 
 app.get('/search/', (req, res) => search(req, res))
 
+app.get('/download/', (req, res) => download(req, res))
+
 app.listen(8080, () => console.log('app listens on port 8080'))
 
 var transmission = new Transmission({
-    port : 9091,
-    host : '127.0.0.1'
+    port: 9091,
+    host: '127.0.0.1',
+    username: 'transmission',
+    password: 'transmission'
 });
 
-function download(magnet_link) {
+function download(req, res) {
   //https://stackoverflow.com/questions/33000811/downloading-torrent-with-node-js
-  transmission.addUrl(magnet_link, {
-      "download-dir" : "/home/torrents"
-  }, function(err, result) {
+  console.log(req.query.magnet_uri)
+  transmission.addUrl(req.query.magnet_uri, function(err, result) {
       if (err) {
           return console.log(err);
       }
       var id = result.id;
       console.log('Just added a new torrent.');
       console.log('Torrent ID: ' + id);
-      getTorrent(id);
+      Transmission.getTorrent(id);
   });
+  res.redirect('localhost:9091')
 }
 
 function search(req, res) {
@@ -40,6 +44,6 @@ function search(req, res) {
 
 function parse_results(results) {
   console.log(results)
-  var html = pug.renderFile('template.jade', {'results': results});
+  var html = pug.renderFile('template.pug', {'results': results});
   return html
 }
