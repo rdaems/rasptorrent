@@ -9,7 +9,7 @@ app.get('/search/', (req, res) => search(req, res))
 
 app.get('/download/', (req, res) => download(req, res))
 
-app.listen(8080, () => console.log('app listens on port 8080'))
+app.listen(8081, () => console.log('app listens on port 8081'))
 
 var transmission = new Transmission({
     port: 9091,
@@ -21,14 +21,14 @@ var transmission = new Transmission({
 function download(req, res) {
   //https://stackoverflow.com/questions/33000811/downloading-torrent-with-node-js
   console.log(req.query.magnet_uri)
-  transmission.addUrl(req.query.magnet_uri, {'download-dir': '/home/rembert/torrents'}, function(err, result) {
+  transmission.addUrl(req.query.magnet_uri, function(err, result) {
       if (err) {
           return console.log(err);
       }
       var id = result.id;
       console.log('Just added a new torrent.');
       console.log('Torrent ID: ' + id);
-      res.redirect('http://localhost:9091')
+      res.redirect('http://192.168.1.27:9091')
   });
 }
 
