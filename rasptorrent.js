@@ -5,6 +5,8 @@ var Transmission = require('transmission')
 var express = require('express')
 var app = express()
 
+app.use('/media', express.static('media'))
+
 app.get('/search/', (req, res) => search(req, res))
 
 app.get('/download/', (req, res) => download(req, res))
@@ -33,7 +35,7 @@ function download(req, res) {
 }
 
 function search(req, res) {
-  search_key = req.query.search
+  search_key = req.query.q
   category_key = req.query.category == null ? 'all' : req.query.category
   if (search_key == null) {
     res.end(parse_results([]))
