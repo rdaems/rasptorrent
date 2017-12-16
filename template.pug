@@ -1,24 +1,24 @@
 doctype html
 html(lang="en")
   head
+    style
+      include style.css
     title= RaspTorrent
   body
-    a test
-    a
-      tr
-        td test
-        td hello
-    h1 RaspTorrent
-    table
-      tr
-        th name
-        th size
-        th category
-        th seeders
-        th leechers
-      tr(href=flsdkjflkj)
-        td #{result.name}
-        td #{result.size}
-        td #{result.category.name}
-        td #{result.seeders}
-        td #{result.leechers}
+    h1: RaspTorrent
+    form(method='GET' action='')
+      input#search.form-control(type='text' placeholder='search...' name='search')
+    div(class='table')
+      div(class='tr')
+        div(class='td') name
+        div(class='td') size
+        div(class='td') category
+        div(class='td') seeders
+        div(class='td') leechers
+      each result in results
+        a(href='download?magnet_uri=' + result.magnetLink, class='tr', target='_blank')
+          div(class='td') #{result.name}
+          div(class='td') #{result.size}
+          div(class='td') #{result.category.name}
+          div(class='td') #{result.seeders}
+          div(class='td') #{result.leechers}

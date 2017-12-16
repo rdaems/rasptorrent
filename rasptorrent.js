@@ -21,25 +21,29 @@ var transmission = new Transmission({
 function download(req, res) {
   //https://stackoverflow.com/questions/33000811/downloading-torrent-with-node-js
   console.log(req.query.magnet_uri)
-  transmission.addUrl(req.query.magnet_uri, function(err, result) {
+  transmission.addUrl(req.query.magnet_uri, {'download-dir': '/home/rembert/torrents'}, function(err, result) {
       if (err) {
           return console.log(err);
       }
       var id = result.id;
       console.log('Just added a new torrent.');
       console.log('Torrent ID: ' + id);
-      Transmission.getTorrent(id);
+      res.redirect('http://localhost:9091')
   });
-  res.redirect('localhost:9091')
 }
 
 function search(req, res) {
-  PirateBay.search('Game of Thrones', {
-    category: 205
-  })
-  .then(results => res.end(parse_results(results)))
-  .catch(err => console.log(err))
-  //res.write('Searching...')
+  search_key = req.query.search
+  category_key = req.query.category == null ? 'all' : req.query.category
+  if (search_key == null) {
+    res.end(parse_results([]))
+  } else {
+    PirateBay.search(search_key, {
+      category: category_key
+    })
+    .then(results => res.end(parse_results(results)))
+    .catch(err => console.log(err))
+  }
 }
 
 function parse_results(results) {
