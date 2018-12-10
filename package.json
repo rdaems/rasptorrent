@@ -1,0 +1,29 @@
+{
+  "name": "rasptorrent",
+  "version": "1.0.0",
+  "description": "Search and download torrents on remote server.",
+  "main": "rasptorrent.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "transmission": "latest",
+    "express": "latest",
+    "torrent-search-api": "latest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rdaems/rasptorrent.git"
+  },
+  "keywords": [
+    "torrent",
+    "api",
+    "transmission"
+  ],
+  "author": "Rembert Daems",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rdaems/rasptorrent/issues"
+  },
+  "homepage": "https://github.com/rdaems/rasptorrent#readme"
+}
